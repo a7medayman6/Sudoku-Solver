@@ -1,6 +1,8 @@
 import pygame
 import random as r
 from player import PlayerInteractions
+
+from solver import SudokuSolver
 pygame.init()
 
 
@@ -26,29 +28,11 @@ class GridHandler:
     default_grid, editable_grid = [], []
 
     def __init__(self):
-        self.default_grid = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ]
+        self.solver = SudokuSolver()
 
-        self.editable_grid = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ]
+        self.default_grid = [[ 0 for i in range(9)] for i in range(9)]
+
+        self.editable_grid = [[ 0 for i in range(9)] for i in range(9)]
 
     """
     - Returns True if the position and value of the random number/ user input are valid.
@@ -100,6 +84,14 @@ class GridHandler:
                     if self.check_valid_position(x, y, value):
                         self.default_grid[y][x] = value
                         self.empty_cells = self.empty_cells-1
+
+    def ensure_solvable_grid(self):
+
+        solved_grid = self.default_grid
+        while not self.solver.solve(solved_grid, None, 0, 0):
+            self.set_default_grid()
+            solved_grid = self.default_grid
+
 
     """
     - Draws the grid with the updated values.

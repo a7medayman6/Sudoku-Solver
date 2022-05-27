@@ -19,7 +19,7 @@ surface.fill(WHITE)
 
 grid = GridHandler()
 grid.set_default_grid()
-
+grid.ensure_solvable_grid()
 player = PlayerInteractions()
 
 # Setting the initial position for the player in the middle of the grid to move from.
