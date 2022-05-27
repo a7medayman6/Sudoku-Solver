@@ -47,7 +47,7 @@ while game_on:
             click = pygame.mouse.get_pos()
 
             if 600 <= click[0] <= 750 and 270 <= click[1] <= 330:  # if the player clicked on the Solve button.
-                solver = SudokuSolver()
+                solver = SudokuSolver(grid.editable_grid)
                 if solver.solve(grid, surface, 0, 0):
                     grid.update_grid(surface, current_x, current_y)
                     player.display_endgame(surface, 1)

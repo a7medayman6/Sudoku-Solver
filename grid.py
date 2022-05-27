@@ -28,10 +28,10 @@ class GridHandler:
     default_grid, editable_grid = [], []
 
     def __init__(self):
-        self.solver = SudokuSolver()
+        
 
         self.default_grid = [[ 0 for i in range(9)] for i in range(9)]
-
+        self.solver = SudokuSolver(self.default_grid)
         self.editable_grid = [[ 0 for i in range(9)] for i in range(9)]
 
     """
@@ -88,7 +88,7 @@ class GridHandler:
     def ensure_solvable_grid(self):
 
         solved_grid = self.default_grid
-        while not self.solver.solve(self, None, 0, 0):
+        while not self.solver.solve(self, None, 0, 0, True):
             self.set_default_grid()
             solved_grid = self.default_grid
 
