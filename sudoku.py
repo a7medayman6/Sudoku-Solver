@@ -20,6 +20,7 @@ surface.fill(WHITE)
 grid = GridHandler()
 grid.set_default_grid()
 grid.ensure_solvable_grid()
+grid.clear_grid()
 player = PlayerInteractions()
 
 # Setting the initial position for the player in the middle of the grid to move from.
@@ -47,7 +48,7 @@ while game_on:
             click = pygame.mouse.get_pos()
 
             if 600 <= click[0] <= 750 and 270 <= click[1] <= 330:  # if the player clicked on the Solve button.
-                solver = SudokuSolver(grid.editable_grid)
+                solver = SudokuSolver()
                 if solver.solve(grid, surface, 0, 0):
                     grid.update_grid(surface, current_x, current_y)
                     player.display_endgame(surface, 1)
